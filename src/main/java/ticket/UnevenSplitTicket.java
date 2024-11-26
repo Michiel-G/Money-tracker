@@ -19,6 +19,19 @@ public class UnevenSplitTicket extends Ticket{
 
     }
 
+    public void payTicket(Person person){
+        int priceToPay = moneySplitMap.getOrDefault(person, 0);
+        if(priceToPay!=0 && person.getWalletAmount() >= priceToPay) {
+            person.setWalletAmount(person.getWalletAmount() - priceToPay);
+        } else {
+            if(priceToPay==0){
+                throw new RuntimeException(person.getName()+" does not need to pay on this ticket");
+            } else{
+                throw new RuntimeException(person.getName()+" does not have enough money");
+            }
+        }
+    }
+
     public int getMoneyOfPerson(Person person) {
         return moneySplitMap.get(person);
     }
