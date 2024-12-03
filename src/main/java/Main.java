@@ -1,5 +1,6 @@
 import person.Person;
 import ticket.*;
+import view.ViewFrame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,9 @@ public class Main {
         person1.setWalletAmount(30);
         person2.setWalletAmount(20);
         person3.setWalletAmount(20);
+
+        ViewFrame view = new ViewFrame();
+        view.initialize();
 
 
         TicketFactory ticketFactory = new TicketFactory();
