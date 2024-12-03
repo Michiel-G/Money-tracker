@@ -1,6 +1,7 @@
 package database;
 
 import controller.TicketController;
+import observers.EntryObserver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,7 @@ public class TicketDB_UTest {
     public void createTicket(){
         TicketDB ticketDB = Mockito.mock(TicketDB.class);
         Ticket ticket = Mockito.mock(Ticket.class);
+        ticketDB.attach(Mockito.mock(EntryObserver.class));
         ticketDB.addTicket(ticket);
 
     }
