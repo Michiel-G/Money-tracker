@@ -4,14 +4,25 @@ import person.Person;
 
 public class Ticket {
     private TicketType ticketType;
-    private int moneyPaid;
+    private int price;
     private Person person;
 
-    public Ticket(TicketType ticketType, int moneyPaid, Person person) {
+    public Ticket(TicketType ticketType, int price, Person person) {
         this.ticketType = ticketType;
-        this.moneyPaid = moneyPaid;
+        this.price = price;
         this.person = person;
     }
 
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
 
 }
