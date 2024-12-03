@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UnevenSplitTicket extends Ticket{
-    private Map<Person, Integer> moneySplitMap;
-    private Map<Person, Boolean> personPaidMap;
+    private final Map<Person, Integer> moneySplitMap;
+    private final Map<Person, Boolean> personPaidMap;
     public UnevenSplitTicket(TicketType ticketType, int price, Person person, Map<Person, Integer> moneySplitMap) {
         super(ticketType, price, person);
         this.moneySplitMap = moneySplitMap;

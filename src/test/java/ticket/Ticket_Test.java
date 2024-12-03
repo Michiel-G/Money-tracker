@@ -1,0 +1,56 @@
+package ticket;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import person.Person;
+
+import java.util.List;
+import java.util.Map;
+
+
+public class Ticket_Test {
+    public Ticket_Test()
+    {
+
+    }
+
+    @Before
+    public void initialize()
+    {
+
+    }
+    @Test
+    public void t_pay_off() throws Exception
+    {
+        Person person1 = new Person("John");
+        Person person2 = new Person("Conor");
+        Person person3 = new Person("Frank");
+        person1.setWalletAmount(30);
+        person2.setWalletAmount(20);
+        person3.setWalletAmount(20);
+
+        TicketFactory ticketFactory = new TicketFactory();
+        EvenSplitTicket ticket1 = ticketFactory.createEvenSplitTicket(TicketType.RESTAURANT, 20, person1, List.of(person1, person2, person3));
+        UnevenSplitTicket ticket2 = ticketFactory.createUnevenSplitTicket(TicketType.RESTAURANT, 20, person1, Map.ofEntries(
+                Map.entry(person1, 15),
+                Map.entry(person2, 5)
+        ));
+        EvenSplitTicket ticket3 = ticketFactory.createEvenSplitTicket(TicketType.CONCERT, 50, person1, List.of(person1, person2, person3));
+
+        ticket2.payTicket(person1);
+        Assert.assertFalse(ticket2.ticketPayedOff()); // not payed off
+        ticket2.payTicket(person2);
+        Assert.assertTrue(ticket2.ticketPayedOff()); // payed off
+
+        ticket1.payTicket(person1);
+        Assert.assertFalse(ticket1.ticketPayedOff()); // not payed off
+        ticket1.payTicket(person2);
+        Assert.assertFalse(ticket1.ticketPayedOff()); // not payed off
+        ticket1.payTicket(person3);
+        Assert.assertTrue(ticket1.ticketPayedOff()); // payed off
+        RuntimeException thrown = Assert.assertThrows(RuntimeException.class, () ->ticket3.payTicket(person1));
+
+        Assert.assertTrue(thrown.getMessage().contains("does not have enough money"));
+    }
+}
