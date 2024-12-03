@@ -1,3 +1,7 @@
+import controller.PersonController;
+import controller.TicketController;
+import database.PersonDB;
+import database.TicketDB;
 import person.Person;
 import ticket.*;
 import view.ViewFrame;
@@ -16,9 +20,17 @@ public class Main {
         person2.setWalletAmount(20);
         person3.setWalletAmount(20);
 
-        ViewFrame view = new ViewFrame();
+
+        PersonDB personDB = new PersonDB();
+        TicketDB ticketDB = new TicketDB();
+
+        PersonController personController = new PersonController(personDB);
+        TicketController ticketController = new TicketController(ticketDB);
+        ViewFrame view = new ViewFrame(personController, ticketController);
         view.initialize();
 
+        personDB.attach(view);
+        ticketDB.attach(view);
 
         TicketFactory ticketFactory = new TicketFactory();
         EvenSplitTicket ticket1 = ticketFactory.createEvenSplitTicket(TicketType.RESTAURANT, 20, person1, List.of(person1, person2, person3));
@@ -42,7 +54,7 @@ public class Main {
         ticket1.payTicket(person3);
         System.out.println("everyone people paid: "+ticket1.ticketPayedOff());
         System.out.println("this will not be possible and throw error");
-        ticket3.payTicket(person1);
+        // ticket3.payTicket(person1);
 
 
     }

@@ -1,8 +1,9 @@
 package controller;
 
-import database.Database;
 import database.PersonDB;
 import person.Person;
+
+import java.util.List;
 
 public class PersonController {
     private PersonDB db;
@@ -13,5 +14,9 @@ public class PersonController {
 
     public void addPerson(Person person) {
         db.addPerson(person);
+    }
+
+    public List<Person> getAllPersons() {
+        return db.getAllPersons();
     }
 }
