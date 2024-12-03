@@ -10,6 +10,7 @@ public class UnevenSplitTicket extends Ticket{
     private Map<Person, Boolean> personPaidMap;
     public UnevenSplitTicket(TicketType ticketType, int price, Person person, Map<Person, Integer> moneySplitMap) {
         super(ticketType, price, person);
+        this.moneySplitMap = moneySplitMap;
         this.personPaidMap = new HashMap<>();
         for (Person personLoop : moneySplitMap.keySet()) {
             this.personPaidMap.put(personLoop, false);
@@ -37,6 +38,7 @@ public class UnevenSplitTicket extends Ticket{
         int priceToPay = moneySplitMap.getOrDefault(person, 0);
         if(priceToPay!=0 && person.getWalletAmount() >= priceToPay && !personPaidMap.get(person)) {
             person.setWalletAmount(person.getWalletAmount() - priceToPay);
+            personPaidMap.put(person, true);
         } else {
             if(priceToPay==0 || personPaidMap.get(person)){
                 throw new RuntimeException(person.getName()+" does not need to pay on this ticket");

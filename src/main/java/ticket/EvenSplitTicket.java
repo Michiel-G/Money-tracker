@@ -28,10 +28,12 @@ public class EvenSplitTicket extends Ticket{
         return true;
     }
 
+
     public void payTicket(Person person){
         int priceToPay = getPrice()/peoplePaying.size();
         if(peoplePaying.contains(person) && person.getWalletAmount() >= priceToPay && !personPaidMap.get(person)) {
             person.setWalletAmount(person.getWalletAmount() - priceToPay);
+            personPaidMap.put(person, true);
         } else {
             if(!peoplePaying.contains(person) || personPaidMap.get(person)){
                 throw new RuntimeException(person.getName()+" does not need to pay on this ticket");
