@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class EvenSplitTicket extends Ticket{
-    private List<Person> peoplePaying;
-    private Map<Person, Boolean> personPaidMap;
+    private final List<Person> peoplePaying;
+    private final Map<Person, Boolean> personPaidMap;
     public EvenSplitTicket(TicketType ticketType, int price, Person person, List<Person> peoplePaying) {
         super(ticketType, price, person);
         this.personPaidMap = new HashMap<>();

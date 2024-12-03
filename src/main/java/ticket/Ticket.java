@@ -3,9 +3,9 @@ package ticket;
 import person.Person;
 
 public class Ticket {
-    private TicketType ticketType;
-    private int price;
-    private Person person;
+    private final TicketType ticketType;
+    private final int price;
+    private final Person person;
 
     public Ticket(TicketType ticketType, int price, Person person) {
         this.ticketType = ticketType;

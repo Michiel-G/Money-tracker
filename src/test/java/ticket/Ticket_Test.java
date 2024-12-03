@@ -5,21 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import person.Person;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class Ticket_Test {
-    public Ticket_Test()
-    {
-
-    }
-
-    @Before
-    public void initialize()
-    {
-
-    }
     @Test
     public void t_pay_off() throws Exception
     {
@@ -31,12 +23,18 @@ public class Ticket_Test {
         person3.setWalletAmount(20);
 
         TicketFactory ticketFactory = new TicketFactory();
-        EvenSplitTicket ticket1 = ticketFactory.createEvenSplitTicket(TicketType.RESTAURANT, 20, person1, List.of(person1, person2, person3));
-        UnevenSplitTicket ticket2 = ticketFactory.createUnevenSplitTicket(TicketType.RESTAURANT, 20, person1, Map.ofEntries(
-                Map.entry(person1, 15),
-                Map.entry(person2, 5)
-        ));
-        EvenSplitTicket ticket3 = ticketFactory.createEvenSplitTicket(TicketType.CONCERT, 50, person1, List.of(person1, person2, person3));
+        List<Person> personList = new ArrayList<>();
+        personList.add(person1);
+        personList.add(person2);
+        personList.add(person3);
+        Map<Person, Integer> unevenList = new HashMap<>();
+        unevenList.put(person1, 15);
+        unevenList.put(person2, 5);
+
+        EvenSplitTicket ticket1 = ticketFactory.createEvenSplitTicket(TicketType.RESTAURANT, 20, person1, personList);
+
+        UnevenSplitTicket ticket2 = ticketFactory.createUnevenSplitTicket(TicketType.RESTAURANT, 20, person1, unevenList);
+        EvenSplitTicket ticket3 = ticketFactory.createEvenSplitTicket(TicketType.CONCERT, 50, person1, personList);
 
         ticket2.payTicket(person1);
         Assert.assertFalse(ticket2.ticketPayedOff()); // not payed off
