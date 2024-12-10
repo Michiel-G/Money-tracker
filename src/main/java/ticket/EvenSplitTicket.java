@@ -2,21 +2,18 @@ package ticket;
 
 import person.Person;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class EvenSplitTicket extends Ticket{
-    private final List<Person> peoplePaying;
     private final Map<Person, Boolean> personPaidMap;
     public EvenSplitTicket(TicketType ticketType, int price, Person person, List<Person> peoplePaying) {
-        super(ticketType, price, person);
+        super(ticketType, price, person, peoplePaying);
         this.personPaidMap = new HashMap<>();
         for (Person personLoop : peoplePaying) {
             this.personPaidMap.put(personLoop, false);
         }
-        this.peoplePaying = peoplePaying;
     }
 
     public boolean ticketPayedOff(){
@@ -44,7 +41,8 @@ public class EvenSplitTicket extends Ticket{
         }
     }
 
-    public List<Person> getPeoplePaying() {
-        return peoplePaying;
+    @Override
+    public int getMoneyOfPerson(Person person) {
+        return getPrice()/ peoplePaying.size();
     }
 }

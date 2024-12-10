@@ -3,13 +3,15 @@ package ticket;
 import person.Person;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UnevenSplitTicket extends Ticket{
     private final Map<Person, Integer> moneySplitMap;
     private final Map<Person, Boolean> personPaidMap;
-    public UnevenSplitTicket(TicketType ticketType, int price, Person person, Map<Person, Integer> moneySplitMap) {
-        super(ticketType, price, person);
+    public UnevenSplitTicket(TicketType ticketType, int price, Person person,
+                             Map<Person, Integer> moneySplitMap, List<Person> peoplePaying) {
+        super(ticketType, price, person, peoplePaying);
         this.moneySplitMap = moneySplitMap;
         this.personPaidMap = new HashMap<>();
         for (Person personLoop : moneySplitMap.keySet()) {
