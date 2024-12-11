@@ -24,5 +24,4 @@ public class Ticket {
     public Person getPerson() {
         return person;
     }
-
 }

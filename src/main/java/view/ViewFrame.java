@@ -4,8 +4,10 @@ package view;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
+import ticket.Ticket;
 import view.panels.PersonPanel;
 import view.panels.RegistrationButtonPanel;
+import view.panels.TicketPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.beans.PropertyChangeListener;
 public class ViewFrame extends JFrame implements PropertyChangeListener {
     RegistrationButtonPanel buttons;
     PersonPanel panel;
+    TicketPanel ticketPanel;
     PersonController personController;
     TicketController ticketController;
 
@@ -34,13 +37,16 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         // Pass the controller to the ButtonPanel
         buttons = new RegistrationButtonPanel(personController);
         panel = new PersonPanel();
+        ticketPanel = new TicketPanel(ticketController, personController);
 
         personController.getAllPersons().forEach((person -> {
           panel.addPerson(person);
         }));
 
-        this.add(buttons);
-        this.add(panel);
+        this.add(ticketPanel);
+        // TODO: clean this up
+        // this.add(buttons);
+        // this.add(panel);
         this.setVisible(true);
     }
 

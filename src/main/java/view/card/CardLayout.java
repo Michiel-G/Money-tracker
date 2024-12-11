@@ -11,7 +11,5 @@ public class CardLayout extends JPanel {
     public CardLayout() {
         comboBoxPane.setLayout(new BoxLayout(comboBoxPane, BoxLayout.Y_AXIS));
     }
-
     JComboBox cb = new JComboBox(comboBoxItems);
-
 }
