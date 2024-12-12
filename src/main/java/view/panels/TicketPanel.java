@@ -27,7 +27,6 @@ public class TicketPanel extends JPanel {
     private JRadioButton unevenTicketButton;
     private JFormattedTextField totalPriceTextField;
     private JLabel totalPriceTextFieldLabel;
-    private JButton addPerson;
     private JButton createTicket;
 
     public TicketPanel(TicketController ticketController, PersonController personController) {
@@ -41,7 +40,6 @@ public class TicketPanel extends JPanel {
         this.totalPriceTextFieldLabel = new JLabel("Enter a price");
         this.ticketOwnerComboBox = new JComboBox();
         this.createTicket = new JButton("Create ticket");
-        this.addPerson = new JButton("Add a person");
 
         this.ticketController = ticketController;
         this.personController = personController;
@@ -86,7 +84,6 @@ public class TicketPanel extends JPanel {
         this.add(ticketOwnerComboBox);
         this.add(totalPriceTextFieldLabel);
         this.add(totalPriceTextField);
-        this.add(addPerson);
         this.add(createTicket);
 
         addCreateTicketButtonListener();
@@ -112,21 +109,13 @@ public class TicketPanel extends JPanel {
         });
     }
 
-    public void addPersonButtonListener() {
-        this.addPerson.addActionListener(listener -> {
-            if (isEvenTicket) {
-
-            }
-        });
-    }
-
     // TODO: fix the total price integer when moving the input verifier, it is ugly code right now :(
     public void addCreateTicketButtonListener() {
         this.createTicket.addActionListener(listener -> {
             if (isEvenTicket) {
                 ticketController.addTicket(new EvenSplitTicket(ticketType, totalPrice, allPersons.get(ticketOwnerComboBox.getSelectedIndex()), new ArrayList<>()));
             } else {
-                ticketController.addTicket(new UnevenSplitTicket(ticketType, totalPrice, allPersons.get(ticketOwnerComboBox.getSelectedIndex()), new HashMap<>()));
+                ticketController.addTicket(new UnevenSplitTicket(ticketType, totalPrice, allPersons.get(ticketOwnerComboBox.getSelectedIndex()), new HashMap<>(), new ArrayList<>()));
             }
         });
     }

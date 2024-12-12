@@ -11,6 +11,8 @@ import view.panels.TicketPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -31,8 +33,8 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         this.setSize(800, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GridBagLayout layout = new GridBagLayout();
-        this.setLayout(layout);
+        this.setLayout(new BorderLayout());
+
 
         // Pass the controller to the ButtonPanel
         buttons = new RegistrationButtonPanel(personController);
@@ -43,10 +45,14 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
           panel.addPerson(person);
         }));
 
-        this.add(ticketPanel);
-        // TODO: clean this up
-        // this.add(buttons);
-        // this.add(panel);
+        // tech for creating tabs, add components here
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Create ticket", ticketPanel);
+        tabbedPane.addTab("Create people", buttons);
+        tabbedPane.addTab("Get total bill", new JLabel("Content for Tab 3", SwingConstants.CENTER));
+
+        // set tab as
+        this.add(tabbedPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
