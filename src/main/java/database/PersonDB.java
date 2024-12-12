@@ -5,9 +5,7 @@ import person.Person;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class PersonDB extends Database {
 
@@ -15,7 +13,7 @@ public class PersonDB extends Database {
     private List<Person> db;
     private ArrayList<PropertyChangeListener> observers;
 
-    public PersonDB(List<Person> db) {
+    public PersonDB() {
         this.db = new ArrayList<>();
         observers = new ArrayList<>();
     }
@@ -35,5 +33,9 @@ public class PersonDB extends Database {
         for (PropertyChangeListener observer : observers) {
             observer.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
         }
+    }
+
+    public List<Person> getAllPersons() {
+        return db;
     }
 }
