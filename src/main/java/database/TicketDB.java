@@ -20,9 +20,18 @@ public class TicketDB extends Database {
         observers = new ArrayList<>();
     }
 
+    public void removeAllTickets(){
+        System.out.println("ahwufeiphaw");
+        this.db = new ArrayList<>();
+    }
+
     public void addTicket(Ticket ticket) {
         db.add(ticket);
         notifyObservers("ticket", null, ticket);
+    }
+
+    public List<Ticket> getAllTickets(){
+        return db;
     }
 
     @Override

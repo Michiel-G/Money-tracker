@@ -5,9 +5,8 @@ import person.Person;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PersonDB extends Database {
 
@@ -15,7 +14,7 @@ public class PersonDB extends Database {
     private List<Person> db;
     private ArrayList<PropertyChangeListener> observers;
 
-    public PersonDB(List<Person> db) {
+    public PersonDB() {
         this.db = new ArrayList<>();
         observers = new ArrayList<>();
     }
@@ -24,6 +23,13 @@ public class PersonDB extends Database {
         db.add(person);
         notifyObservers("person", null, person);
     }
+
+    public void removeAllDebts(){
+        for (Person person : db) {
+            person.removeDebts();
+        }
+    }
+
 
     @Override
     public void attach(PropertyChangeListener observer) {
@@ -35,5 +41,17 @@ public class PersonDB extends Database {
         for (PropertyChangeListener observer : observers) {
             observer.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
         }
+    }
+
+    public List<Person> getAllPersons() {
+        return db;
+    }
+    public List<Person> getPeopleByNames(List<String> namesFilter){
+        return this.db.stream().filter(person -> namesFilter.contains(person.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public Person getPersonByName(String nameFilter){
+        return this.db.stream().filter(person -> person.getName().equals(nameFilter)).findFirst().orElseThrow(() -> new RuntimeException("Person not found"));
     }
 }
