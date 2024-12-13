@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TicketPanel extends JPanel {
+public class EvenTicketPanel extends JPanel {
     private TicketController ticketController;
     private PersonController personController;
     private TicketType ticketType;
@@ -23,24 +23,19 @@ public class TicketPanel extends JPanel {
     TicketType[] ticketTypeArray = TicketType.values();
     private JComboBox ticketTypeComboBox;
     private JComboBox ticketOwnerComboBox;
-    private JRadioButton evenTicketButton;
-    private JRadioButton unevenTicketButton;
+    private JScrollPane peopleScrollPane;
+    private JList<Object> allPeopleJlist;
     private JFormattedTextField totalPriceTextField;
     private JLabel totalPriceTextFieldLabel;
     private JButton createTicket;
 
-    public TicketPanel(TicketController ticketController, PersonController personController) {
-        JLabel label = new JLabel("Add a ticket");
+    public EvenTicketPanel(TicketController ticketController, PersonController personController) {
+        JLabel label = new JLabel("Add a even ticket");
 
-        this.evenTicketButton = new JRadioButton("Even ticket");
-        this.unevenTicketButton = new JRadioButton("Uneven ticket");
-        this.evenTicketButton.setActionCommand("Even");
-        this.unevenTicketButton.setActionCommand("Uneven");
         this.totalPriceTextField = new JFormattedTextField();
         this.totalPriceTextFieldLabel = new JLabel("Enter a price");
         this.ticketOwnerComboBox = new JComboBox();
         this.createTicket = new JButton("Create ticket");
-
         this.ticketController = ticketController;
         this.personController = personController;
 
@@ -51,6 +46,7 @@ public class TicketPanel extends JPanel {
                 String text = ((JTextField) input).getText();
                 try {
                     int parsedInt = Integer.parseInt(text);
+
                     if (parsedInt < 0) return false;
                     totalPrice = parsedInt;
                 } catch (NumberFormatException e) {
@@ -65,42 +61,44 @@ public class TicketPanel extends JPanel {
         JLabel totalPriceTextFieldLabel = new JLabel("Enter a total price");
         totalPriceTextFieldLabel.setLabelFor(totalPriceTextField);
 
-        ButtonGroup evenUnevenTicketGroup = new ButtonGroup();
-        evenUnevenTicketGroup.add(evenTicketButton);
-        evenUnevenTicketGroup.add(unevenTicketButton);
-
         // TODO: remove this initializer person, this is a dummy value
         personController.addPerson(new Person("Bertje Blink"));
+        personController.addPerson(new Person(" Blink"));
 
         this.allPersons = personController.getAllPersons();
+        this.allPeopleJlist = new JList<>(allPersons.stream().map(Person::getName).toArray());
+        this.allPeopleJlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.peopleScrollPane = new JScrollPane(allPeopleJlist);
         this.ticketOwnerComboBox = new JComboBox(allPersons.stream().map(Person::getName).toArray());
         this.ticketTypeComboBox = new JComboBox(ticketTypeArray);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(label);
-        this.add(evenTicketButton);
-        this.add(unevenTicketButton);
+        this.add(new JLabel("Select the person who paid the ticket"));
         this.add(ticketOwnerComboBox);
         this.add(totalPriceTextFieldLabel);
         this.add(totalPriceTextField);
+        this.add(new JLabel("Select people who need to pay back (use ctrl+click to select multiple)"));
+        this.add(peopleScrollPane);
+        this.add(new JLabel("Select the type of ticket"));
+        this.add(ticketTypeComboBox);
         this.add(createTicket);
 
         addCreateTicketButtonListener();
         addTicketTypeComboBoxListener();
-        addEvenUnevenRadioButtonListener();
     }
 
-    public void addEvenUnevenRadioButtonListener() {
-        this.ticketTypeComboBox.addActionListener(listener -> {
-            if (listener.getActionCommand().toUpperCase().equals("EVEN")) {
-                // Add an even ticket
-                isEvenTicket = true;
-            } else if (listener.getActionCommand().toUpperCase().equals("UNEVEN")) {
-                // Add an uneven ticket
-                isEvenTicket = false;
-            }
-        });
+    public void updatePeople(){
+        this.allPersons = personController.getAllPersons();
+        this.ticketOwnerComboBox.removeAllItems();
+        for (Person person : allPersons) {
+            this.ticketOwnerComboBox.addItem(person.getName());
+        }
+        this.allPeopleJlist=new JList<>(allPersons.stream().map(Person::getName).toArray());
+        this.allPeopleJlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.peopleScrollPane.setViewportView(allPeopleJlist);
+        this.peopleScrollPane.revalidate();
+        this.peopleScrollPane.repaint();
     }
 
     public void addTicketTypeComboBoxListener() {
@@ -112,11 +110,17 @@ public class TicketPanel extends JPanel {
     // TODO: fix the total price integer when moving the input verifier, it is ugly code right now :(
     public void addCreateTicketButtonListener() {
         this.createTicket.addActionListener(listener -> {
-            if (isEvenTicket) {
-                ticketController.addTicket(new EvenSplitTicket(ticketType, totalPrice, allPersons.get(ticketOwnerComboBox.getSelectedIndex()), new ArrayList<>()));
-            } else {
-                ticketController.addTicket(new UnevenSplitTicket(ticketType, totalPrice, allPersons.get(ticketOwnerComboBox.getSelectedIndex()), new HashMap<>(), new ArrayList<>()));
+            List<Object> namesPeople = allPeopleJlist.getSelectedValuesList();
+            List<String> actualNames = new ArrayList<>();
+            for (Object namesPerson : namesPeople) {
+                actualNames.add(namesPerson.toString());
             }
+            ticketController.addTicket(new EvenSplitTicket(
+                    ticketType,
+                    totalPrice,
+                    allPersons.get(ticketOwnerComboBox.getSelectedIndex()),
+                    personController.peopleByNames(actualNames)));
+
         });
     }
 }

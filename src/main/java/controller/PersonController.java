@@ -19,4 +19,11 @@ public class PersonController {
     public List<Person> getAllPersons() {
         return db.getAllPersons();
     }
+    public List<Person> peopleByNames(List<String> names) {
+        return db.getPeopleByNames(names);
+    }
+    public Person personByName(String name) {
+        return db.getPersonByName(name);
+    }
+
 }

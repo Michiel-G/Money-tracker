@@ -4,15 +4,13 @@ package view;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
-import ticket.Ticket;
 import view.panels.PersonPanel;
 import view.panels.RegistrationButtonPanel;
-import view.panels.TicketPanel;
+import view.panels.EvenTicketPanel;
+import view.panels.UnevenTicketPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -20,7 +18,8 @@ import java.beans.PropertyChangeListener;
 public class ViewFrame extends JFrame implements PropertyChangeListener {
     RegistrationButtonPanel buttons;
     PersonPanel panel;
-    TicketPanel ticketPanel;
+    EvenTicketPanel evenTicketPanel;
+    UnevenTicketPanel unevenTicketPanel;
     PersonController personController;
     TicketController ticketController;
 
@@ -39,18 +38,28 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         // Pass the controller to the ButtonPanel
         buttons = new RegistrationButtonPanel(personController);
         panel = new PersonPanel();
-        ticketPanel = new TicketPanel(ticketController, personController);
+        evenTicketPanel = new EvenTicketPanel(ticketController, personController);
+        unevenTicketPanel = new UnevenTicketPanel(ticketController, personController);
 
         personController.getAllPersons().forEach((person -> {
           panel.addPerson(person);
         }));
 
         // tech for creating tabs, add components here
+        JTabbedPane ticketTabbedPane = new JTabbedPane();
+        ticketTabbedPane.addTab("Even ticket", evenTicketPanel);
+        ticketTabbedPane.addTab("Uneven ticket", unevenTicketPanel);
+
+        // tech for creating tabs, add components here
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Create ticket", ticketPanel);
+        tabbedPane.addTab("Create ticket", ticketTabbedPane);
         tabbedPane.addTab("Create people", buttons);
         tabbedPane.addTab("Get total bill", new JLabel("Content for Tab 3", SwingConstants.CENTER));
-
+        tabbedPane.addChangeListener(e -> {
+            evenTicketPanel.updatePeople();
+            unevenTicketPanel.updatePeople();
+            System.out.println("updated people");
+        });
         // set tab as
         this.add(tabbedPane, BorderLayout.CENTER);
         this.setVisible(true);

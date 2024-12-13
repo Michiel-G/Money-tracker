@@ -6,7 +6,7 @@ import person.Person;
 import javax.swing.*;
 
 public class RegistrationButtonPanel extends JPanel {
-    private JButton addPerson;
+    private final JButton addPerson;
     private PersonController personController;
     public static JTextArea nameTextArea = new JTextArea("");
 
@@ -15,7 +15,6 @@ public class RegistrationButtonPanel extends JPanel {
     {
         JLabel label = new JLabel("Registration buttons");
         this.addPerson = new JButton("Add person");
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(label);
