@@ -13,7 +13,10 @@ public class EvenSplitTicket extends Ticket{
         this.personPaidMap = new HashMap<>();
         for (Person personLoop : peoplePaying) {
             this.personPaidMap.put(personLoop, false);
+            personLoop.addDebt(person, price/(peoplePaying.size()+1));
         }
+
+
     }
 
     public boolean ticketPayedOff(){

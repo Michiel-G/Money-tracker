@@ -16,6 +16,7 @@ public class UnevenSplitTicket extends Ticket{
         this.personPaidMap = new HashMap<>();
         for (Person personLoop : moneySplitMap.keySet()) {
             this.personPaidMap.put(personLoop, false);
+            personLoop.addDebt(person,moneySplitMap.get(personLoop));
         }
         int totalMapMoney=0;
         for (Integer value : moneySplitMap.values()) {

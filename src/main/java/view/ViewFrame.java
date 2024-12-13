@@ -4,10 +4,7 @@ package view;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
-import view.panels.PersonPanel;
-import view.panels.RegistrationButtonPanel;
-import view.panels.EvenTicketPanel;
-import view.panels.UnevenTicketPanel;
+import view.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +19,7 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
     UnevenTicketPanel unevenTicketPanel;
     PersonController personController;
     TicketController ticketController;
+    TotalBillPanel totalBillPanel;
 
     public ViewFrame(PersonController personController, TicketController ticketController) {
         this.personController = personController;
@@ -50,14 +48,17 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         ticketTabbedPane.addTab("Even ticket", evenTicketPanel);
         ticketTabbedPane.addTab("Uneven ticket", unevenTicketPanel);
 
+        this.totalBillPanel = new TotalBillPanel(ticketController, personController);
+
         // tech for creating tabs, add components here
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Create ticket", ticketTabbedPane);
         tabbedPane.addTab("Create people", buttons);
-        tabbedPane.addTab("Get total bill", new JLabel("Content for Tab 3", SwingConstants.CENTER));
+        tabbedPane.addTab("Get total bill", totalBillPanel);
         tabbedPane.addChangeListener(e -> {
             evenTicketPanel.updatePeople();
             unevenTicketPanel.updatePeople();
+            totalBillPanel.update();
             System.out.println("updated people");
         });
         // set tab as

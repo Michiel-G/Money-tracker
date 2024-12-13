@@ -24,6 +24,13 @@ public class PersonDB extends Database {
         notifyObservers("person", null, person);
     }
 
+    public void removeAllDebts(){
+        for (Person person : db) {
+            person.removeDebts();
+        }
+    }
+
+
     @Override
     public void attach(PropertyChangeListener observer) {
         observers.add(observer);

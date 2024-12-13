@@ -1,5 +1,6 @@
 package person;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Person {
@@ -9,6 +10,7 @@ public class Person {
 
     public Person(String name) {
         this.name = name;
+        this.debts = new HashMap<>();
     }
 
     public String getName() {
@@ -19,12 +21,19 @@ public class Person {
         return debts;
     }
 
+    public void removeDebts(){
+        this.debts = new HashMap<>();
+    }
     public void addDebt(Person person, int amount){
-        if(debts.containsKey(person)){
-            debts.replace(person, debts.get(person)+amount);
-        } else{
-            debts.put(person, amount);
+        if (!person.equals(this)){
+            if(debts.containsKey(person)){
+                debts.replace(person, debts.get(person)+amount);
+            } else{
+                debts.put(person, amount);
+                System.out.println("added debt to "+this.getName()+" for "+person.getName()+" of price "+amount);
+            }
         }
+
     }
 
     public int getWalletAmount() {

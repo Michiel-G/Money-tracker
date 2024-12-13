@@ -19,6 +19,9 @@ public class PersonController {
     public List<Person> getAllPersons() {
         return db.getAllPersons();
     }
+    public void removeAllDebts(){
+        db.removeAllDebts();
+    }
     public List<Person> peopleByNames(List<String> names) {
         return db.getPeopleByNames(names);
     }
