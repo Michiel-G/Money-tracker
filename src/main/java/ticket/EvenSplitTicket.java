@@ -10,7 +10,7 @@ public class EvenSplitTicket extends Ticket{
     public EvenSplitTicket(TicketType ticketType, int price, Person owner, List<Person> peoplePaying) {
         super(ticketType, price, owner, peoplePaying);
         for (Person person : peoplePaying) {
-            person.addDebt(owner,price/peoplePaying.size()+1);
+            person.addDebt(owner,price/(peoplePaying.size()+1));
         }
     }
 
