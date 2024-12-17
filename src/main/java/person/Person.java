@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Person {
     private final String name;
-    private int walletAmount;
     private Map<Person, Integer> debts;
 
     public Person(String name) {
@@ -34,14 +33,6 @@ public class Person {
             }
         }
 
-    }
-
-    public int getWalletAmount() {
-        return walletAmount;
-    }
-
-    public void setWalletAmount(int walletAmount) {
-        this.walletAmount = walletAmount;
     }
 
 }

@@ -16,14 +16,14 @@ public class TicketFactory {
     public List<Person> createGlobalTicket(List<Ticket> tickets){
         List<Person> people = new ArrayList<>();
         for (Ticket ticket : tickets) {
-            if(!people.contains(ticket.getPerson())){
-               people.add(ticket.getPerson());
+            if(!people.contains(ticket.getOwner())){
+               people.add(ticket.getOwner());
             }
             for (Person person : ticket.getPeoplePaying()) {
                 if(!people.contains(person)){
                     people.add(person);
                 }
-                person.addDebt(ticket.getPerson(), ticket.getMoneyOfPerson(person));
+                person.addDebt(ticket.getOwner(), ticket.getMoneyOfPerson(person));
             }
         }
 

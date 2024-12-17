@@ -18,9 +18,6 @@ public class Ticket_Test {
         Person person1 = new Person("John");
         Person person2 = new Person("Conor");
         Person person3 = new Person("Frank");
-        person1.setWalletAmount(30);
-        person2.setWalletAmount(20);
-        person3.setWalletAmount(20);
 
         TicketFactory ticketFactory = new TicketFactory();
         List<Person> personList = new ArrayList<>();
