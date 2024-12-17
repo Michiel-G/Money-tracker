@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        PersonDB personDB = new PersonDB();
-        TicketDB ticketDB = new TicketDB();
+        PersonDB personDB = PersonDB.getInstance();
+        TicketDB ticketDB = TicketDB.getInstance();
 
         PersonController personController = new PersonController(personDB);
         TicketController ticketController = new TicketController(ticketDB);

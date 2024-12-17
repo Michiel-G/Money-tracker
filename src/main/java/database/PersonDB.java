@@ -14,7 +14,7 @@ public class PersonDB extends Database {
     private List<Person> db;
     private ArrayList<PropertyChangeListener> observers;
 
-    public PersonDB() {
+    private PersonDB() {
         this.db = new ArrayList<>();
         observers = new ArrayList<>();
     }
@@ -28,6 +28,13 @@ public class PersonDB extends Database {
         for (Person person : db) {
             person.removeDebts();
         }
+    }
+
+    public static PersonDB getInstance() {
+        if (instance == null) {
+            instance = new PersonDB();
+        }
+        return instance;
     }
 
 
