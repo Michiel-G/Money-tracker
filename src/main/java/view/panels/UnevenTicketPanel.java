@@ -143,7 +143,9 @@ public class UnevenTicketPanel extends JPanel {
             for (int i = 0; i < tableModel.getRowCount(); i++) {
                 Person person = personController.personByName((String) tableModel.getValueAt(i, 0));
                 Integer value = (Integer) tableModel.getValueAt(i, 1);
+                System.out.println(tableModel.getValueAt(i, 1));
                 if (value!=0){
+                    System.out.println("debt added for:"+ person.getName());
                     peoplePriceMap.put(person, value);
                     actualNames.add((String) tableModel.getValueAt(i, 0));
                 }
