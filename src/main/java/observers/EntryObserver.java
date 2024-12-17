@@ -12,6 +12,6 @@ public class EntryObserver implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Ticket from "+((Ticket)evt.getNewValue()).getPerson().getName());
+        System.out.println("Ticket from "+((Ticket)evt.getNewValue()).getOwner().getName());
     }
 }

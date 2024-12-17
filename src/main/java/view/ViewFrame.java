@@ -55,11 +55,11 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         tabbedPane.addTab("Create ticket", ticketTabbedPane);
         tabbedPane.addTab("Create people", buttons);
         tabbedPane.addTab("Get total bill", totalBillPanel);
+        // when tab changes
         tabbedPane.addChangeListener(e -> {
             evenTicketPanel.updatePeople();
             unevenTicketPanel.updatePeople();
             totalBillPanel.update();
-            System.out.println("updated people");
         });
         // set tab as
         this.add(tabbedPane, BorderLayout.CENTER);
