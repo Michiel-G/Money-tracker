@@ -50,12 +50,6 @@ public class TotalBillPanel  extends JPanel {
                 // Only the second column (index 1) is editable
                 return false;
             }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                // Set the type for each column: String for the first and Integer for the second
-                return columnIndex == 1 ? Integer.class : String.class;
-            }
         };
 
         // Create the JTable
@@ -97,7 +91,6 @@ public class TotalBillPanel  extends JPanel {
     }
     public void addResetButtonListener() {
         this.resetButton.addActionListener(listener -> {
-            System.out.println("helaowefaw");
             this.ticketController.removeAllTickets();
             this.personController.removeAllDebts();
             update();
