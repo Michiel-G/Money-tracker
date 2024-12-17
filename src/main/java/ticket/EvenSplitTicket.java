@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class EvenSplitTicket extends Ticket{
-    public EvenSplitTicket(TicketType ticketType, int price, Person person, List<Person> peoplePaying) {
-        super(ticketType, price, person, peoplePaying);
-
-
+    public EvenSplitTicket(TicketType ticketType, int price, Person owner, List<Person> peoplePaying) {
+        super(ticketType, price, owner, peoplePaying);
+        for (Person person : peoplePaying) {
+            person.addDebt(owner,price/peoplePaying.size()+1);
+        }
     }
 
 

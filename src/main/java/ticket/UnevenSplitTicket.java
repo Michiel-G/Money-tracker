@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class UnevenSplitTicket extends Ticket{
     private final Map<Person, Integer> moneySplitMap;
-    public UnevenSplitTicket(TicketType ticketType, int price, Person person,
+    public UnevenSplitTicket(TicketType ticketType, int price, Person owner,
                              Map<Person, Integer> moneySplitMap, List<Person> peoplePaying) {
-        super(ticketType, price, person, peoplePaying);
+        super(ticketType, price, owner, peoplePaying);
         this.moneySplitMap = moneySplitMap;
         int totalMapMoney=0;
         for (Integer value : moneySplitMap.values()) {
@@ -18,6 +18,9 @@ public class UnevenSplitTicket extends Ticket{
         }
         if (totalMapMoney!=price){
             throw new RuntimeException("Price of the ticket is not the same as the sum of money in the moneysplitmap!");
+        }
+        for (Person person : moneySplitMap.keySet()) {
+            person.addDebt(owner,moneySplitMap.get(person));
         }
 
     }
