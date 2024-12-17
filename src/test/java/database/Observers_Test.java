@@ -17,7 +17,7 @@ import java.util.Map;
 public class Observers_Test {
     @Test
     public void Observer_T (){
-        TicketDB ticketDB = new TicketDB();
+        TicketDB ticketDB = TicketDB.getInstance();
         Person person1 = new Person("John");
         Person person2 = new Person("Conor");
         Person person3 = new Person("Frank");
