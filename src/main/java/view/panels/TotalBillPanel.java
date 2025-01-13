@@ -3,15 +3,11 @@ package view.panels;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
-import ticket.Ticket;
-import ticket.UnevenSplitTicket;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TotalBillPanel  extends JPanel {
@@ -24,7 +20,7 @@ public class TotalBillPanel  extends JPanel {
         this.ticketController = ticketController;
         this.personController = personController;
 
-        List<Person> allPeopleDebts = personController.getAllPersons()
+        List<Person> allPeopleDebts = personController.getAllPeople()
                 .stream()
                 .filter(person ->
                         !person.getDebts().isEmpty()
@@ -67,7 +63,7 @@ public class TotalBillPanel  extends JPanel {
     }
 
     public void update(){
-        List<Person> allPeopleDebts = personController.getAllPersons();
+        List<Person> allPeopleDebts = personController.getAllPeople();
 
         Object[][] data = new Object[allPeopleDebts.size()][allPeopleDebts.size()+1];
         for (int i = 0; i < allPeopleDebts.size(); i++) {

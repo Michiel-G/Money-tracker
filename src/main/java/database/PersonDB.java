@@ -13,8 +13,14 @@ public class PersonDB extends Database {
     private static PersonDB instance;
     private List<Person> db;
     private ArrayList<PropertyChangeListener> observers;
+    public static PersonDB getInstance(){
+        if (instance==null){
+            instance=new PersonDB();
+        }
+        return instance;
+    }
 
-    public PersonDB() {
+    private PersonDB() {
         this.db = new ArrayList<>();
         observers = new ArrayList<>();
     }
@@ -43,7 +49,7 @@ public class PersonDB extends Database {
         }
     }
 
-    public List<Person> getAllPersons() {
+    public List<Person> getAllPeople() {
         return db;
     }
     public List<Person> getPeopleByNames(List<String> namesFilter){

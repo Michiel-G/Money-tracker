@@ -16,8 +16,8 @@ public class PersonController {
         db.addPerson(person);
     }
 
-    public List<Person> getAllPersons() {
-        return db.getAllPersons();
+    public List<Person> getAllPeople() {
+        return db.getAllPeople();
     }
     public void removeAllDebts(){
         db.removeAllDebts();

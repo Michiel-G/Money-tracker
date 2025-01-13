@@ -14,8 +14,14 @@ public class TicketDB extends Database {
     private List<Ticket> db;
     private ArrayList<PropertyChangeListener> observers;
 
+    public static TicketDB getInstance(){
+        if (instance==null){
+            instance=new TicketDB();
+        }
+        return instance;
+    }
 
-    public TicketDB() {
+    private TicketDB() {
         this.db = new ArrayList<>();
         observers = new ArrayList<>();
     }
@@ -28,10 +34,6 @@ public class TicketDB extends Database {
     public void addTicket(Ticket ticket) {
         db.add(ticket);
         notifyObservers("ticket", null, ticket);
-    }
-
-    public List<Ticket> getAllTickets(){
-        return db;
     }
 
     @Override

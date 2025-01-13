@@ -5,11 +5,9 @@ import controller.TicketController;
 import person.Person;
 import ticket.EvenSplitTicket;
 import ticket.TicketType;
-import ticket.UnevenSplitTicket;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EvenTicketPanel extends JPanel {
@@ -65,7 +63,7 @@ public class EvenTicketPanel extends JPanel {
         personController.addPerson(new Person("Bertje Blink"));
         personController.addPerson(new Person(" Blink"));
 
-        this.allPersons = personController.getAllPersons();
+        this.allPersons = personController.getAllPeople();
         this.allPeopleJlist = new JList<>(allPersons.stream().map(Person::getName).toArray());
         this.allPeopleJlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.peopleScrollPane = new JScrollPane(allPeopleJlist);
@@ -89,7 +87,7 @@ public class EvenTicketPanel extends JPanel {
     }
 
     public void updatePeople(){
-        this.allPersons = personController.getAllPersons();
+        this.allPersons = personController.getAllPeople();
         this.ticketOwnerComboBox.removeAllItems();
         for (Person person : allPersons) {
             this.ticketOwnerComboBox.addItem(person.getName());
