@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class Ticket {
     private final TicketType ticketType;
-    private final int price;
-    private final Person owner;
+    protected int price;
+    protected final Person owner;
     protected final List<Person> peoplePaying;
 
     public Ticket(TicketType ticketType, int price, Person owner, List<Person> peoplePaying) {
@@ -31,7 +31,11 @@ public abstract class Ticket {
     public List<Person> getPeoplePaying() {
         return peoplePaying;
     }
-    public abstract int getMoneyOfPerson(Person person);
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
+    public abstract int calculateTotalPrice();
+    public abstract void addDebts();
 }
