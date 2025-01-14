@@ -14,7 +14,6 @@ public class EvenTicketPanel extends JPanel {
     private TicketController ticketController;
     private PersonController personController;
     private TicketType ticketType;
-    private boolean isEvenTicket;
     private int totalPrice;
     private List<Person> allPersons;
 
@@ -28,7 +27,6 @@ public class EvenTicketPanel extends JPanel {
     private JButton createTicket;
 
     public EvenTicketPanel(TicketController ticketController, PersonController personController) {
-        JLabel label = new JLabel("Add a even ticket");
 
         this.totalPriceTextField = new JFormattedTextField();
         this.totalPriceTextFieldLabel = new JLabel("Enter a price");
@@ -37,7 +35,6 @@ public class EvenTicketPanel extends JPanel {
         this.ticketController = ticketController;
         this.personController = personController;
 
-        // TODO: remove this inner (anonymous) class and move it to another class "NumberInputVerifier".
         totalPriceTextField.setInputVerifier(new InputVerifier() {
             @Override
             public boolean verify(JComponent input) {
@@ -58,10 +55,6 @@ public class EvenTicketPanel extends JPanel {
 
         JLabel totalPriceTextFieldLabel = new JLabel("Enter a total price");
         totalPriceTextFieldLabel.setLabelFor(totalPriceTextField);
-
-        // TODO: remove this initializer person, this is a dummy value
-        personController.addPerson(new Person("Bertje Blink"));
-        personController.addPerson(new Person(" Blink"));
 
         this.allPersons = personController.getAllPeople();
         this.allPeopleJlist = new JList<>(allPersons.stream().map(Person::getName).toArray());
@@ -105,7 +98,6 @@ public class EvenTicketPanel extends JPanel {
         });
     }
 
-    // TODO: fix the total price integer when moving the input verifier, it is ugly code right now :(
     public void addCreateTicketButtonListener() {
         this.createTicket.addActionListener(listener -> {
             List<Object> namesPeople = allPeopleJlist.getSelectedValuesList();

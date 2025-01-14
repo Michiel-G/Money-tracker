@@ -134,7 +134,6 @@ public class UnevenTicketPanel extends JPanel {
         });
     }
 
-    // TODO: fix the total price integer when moving the input verifier, it is ugly code right now :(
     public void addCreateTicketButtonListener() {
         this.createTicket.addActionListener(listener -> {
             List<String> actualNames = new ArrayList<>();
