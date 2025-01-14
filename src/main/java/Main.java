@@ -18,6 +18,8 @@ public class Main {
 
         PersonController personController = new PersonController(personDB);
         TicketController ticketController = new TicketController(ticketDB);
+        personController.addPerson(new Person("Max"));
+        personController.addPerson(new Person("Michiel"));
         ViewFrame view = new ViewFrame(personController, ticketController);
         view.initialize();
 

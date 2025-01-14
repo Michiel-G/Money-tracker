@@ -3,7 +3,6 @@ package view.panels;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
-import ticket.EvenSplitTicket;
 import ticket.TicketType;
 import ticket.UnevenSplitTicket;
 
@@ -38,7 +37,7 @@ public class UnevenTicketPanel extends JPanel {
         this.createTicket = new JButton("Create ticket");
         this.ticketController = ticketController;
         this.personController = personController;
-        this.allPersons = personController.getAllPersons();
+        this.allPersons = personController.getAllPeople();
 
         // TODO: remove this inner (anonymous) class and move it to another class "NumberInputVerifier".
         totalPriceTextField.setInputVerifier(new InputVerifier() {
@@ -111,7 +110,7 @@ public class UnevenTicketPanel extends JPanel {
     }
 
     public void updatePeople(){
-        this.allPersons = personController.getAllPersons();
+        this.allPersons = personController.getAllPeople();
         this.ticketOwnerComboBox.removeAllItems();
         for (Person person : allPersons) {
             this.ticketOwnerComboBox.addItem(person.getName());
@@ -135,7 +134,6 @@ public class UnevenTicketPanel extends JPanel {
         });
     }
 
-    // TODO: fix the total price integer when moving the input verifier, it is ugly code right now :(
     public void addCreateTicketButtonListener() {
         this.createTicket.addActionListener(listener -> {
             List<String> actualNames = new ArrayList<>();

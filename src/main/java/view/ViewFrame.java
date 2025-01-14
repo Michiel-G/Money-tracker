@@ -39,7 +39,7 @@ public class ViewFrame extends JFrame implements PropertyChangeListener {
         evenTicketPanel = new EvenTicketPanel(ticketController, personController);
         unevenTicketPanel = new UnevenTicketPanel(ticketController, personController);
 
-        personController.getAllPersons().forEach((person -> {
+        personController.getAllPeople().forEach((person -> {
           panel.addPerson(person);
         }));
 

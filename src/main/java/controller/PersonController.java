@@ -4,7 +4,6 @@ import database.PersonDB;
 import person.Person;
 
 import java.util.List;
-
 public class PersonController {
     private PersonDB db;
 
@@ -16,8 +15,8 @@ public class PersonController {
         db.addPerson(person);
     }
 
-    public List<Person> getAllPersons() {
-        return db.getAllPersons();
+    public List<Person> getAllPeople() {
+        return db.getAllPeople();
     }
     public void removeAllDebts(){
         db.removeAllDebts();

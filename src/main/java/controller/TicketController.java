@@ -19,8 +19,4 @@ public class TicketController {
         db.addTicket(ticket);
     }
 
-    public List<Ticket> getAllTickets(){
-        return db.getAllTickets();
-    }
-
 }

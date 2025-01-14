@@ -33,4 +33,8 @@ public class UnevenSplitTicket extends Ticket{
             person.addDebt(owner,moneySplitMap.get(person));
         }
     }
+
+    public int getMoneyOfPerson(Person person) {
+        return moneySplitMap.get(person);
+    }
 }
