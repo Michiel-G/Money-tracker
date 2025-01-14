@@ -36,6 +36,13 @@ public class PersonDB extends Database {
         }
     }
 
+    public static PersonDB getInstance() {
+        if (instance == null) {
+            instance = new PersonDB();
+        }
+        return instance;
+    }
+
 
     @Override
     public void attach(PropertyChangeListener observer) {
