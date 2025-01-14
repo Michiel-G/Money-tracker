@@ -27,7 +27,7 @@ public class TicketDB_UTest {
     }
     @Test
     public void createTicket(){
-        TicketDB ticketDB = Mockito.mock(TicketDB.class);
+        TicketDB ticketDB = TicketDB.getInstance();
         Ticket ticket = Mockito.mock(Ticket.class);
         ticketDB.attach(Mockito.mock(EntryObserver.class));
         ticketDB.addTicket(ticket);

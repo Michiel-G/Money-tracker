@@ -22,7 +22,6 @@ public class UnevenSplitTicket extends Ticket{
         for (Person person : moneySplitMap.keySet()) {
             person.addDebt(owner,moneySplitMap.get(person));
         }
-
     }
 
     public int getMoneyOfPerson(Person person) {

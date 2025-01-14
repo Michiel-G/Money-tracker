@@ -4,7 +4,6 @@ import database.PersonDB;
 import person.Person;
 
 import java.util.List;
-
 public class PersonController {
     private PersonDB db;
 
