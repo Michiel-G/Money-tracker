@@ -12,6 +12,16 @@ public class UnevenSplitTicket extends Ticket{
                              Map<Person, Integer> moneySplitMap, List<Person> peoplePaying) {
         super(ticketType, price, owner, peoplePaying);
         this.moneySplitMap = moneySplitMap;
+        addDebts();
+    }
+
+    @Override
+    public int calculateTotalPrice() {
+        return this.getPrice();
+    }
+
+    @Override
+    public void addDebts() {
         int totalMapMoney=0;
         for (Integer value : moneySplitMap.values()) {
             totalMapMoney+= value;

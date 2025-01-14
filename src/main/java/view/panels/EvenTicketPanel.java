@@ -4,7 +4,12 @@ import controller.PersonController;
 import controller.TicketController;
 import person.Person;
 import ticket.EvenSplitTicket;
+import ticket.Ticket;
 import ticket.TicketType;
+import ticket.UnevenSplitTicket;
+import ticket.decorator.Currency;
+import ticket.decorator.CurrencyDecorator;
+import ticket.decorator.TaxDecorator;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -20,6 +25,13 @@ public class EvenTicketPanel extends JPanel {
     TicketType[] ticketTypeArray = TicketType.values();
     private JComboBox ticketTypeComboBox;
     private JComboBox ticketOwnerComboBox;
+
+    private JComboBox taxDecoratorCombobox;
+    String[] taxList = {"", "6%", "21%"};
+    private JComboBox currencyDecoratorCombobox;
+    String[] currencyList = {"", "Euro", "Dollar", "Zlotych"};
+    private JFormattedTextField discountCodeDecoratorTextField;
+
     private JScrollPane peopleScrollPane;
     private JList<Object> allPeopleJlist;
     private JFormattedTextField totalPriceTextField;
@@ -34,6 +46,9 @@ public class EvenTicketPanel extends JPanel {
         this.createTicket = new JButton("Create ticket");
         this.ticketController = ticketController;
         this.personController = personController;
+
+        this.taxDecoratorCombobox = new JComboBox(taxList);
+        this.currencyDecoratorCombobox = new JComboBox(currencyList);
 
         totalPriceTextField.setInputVerifier(new InputVerifier() {
             @Override
@@ -73,6 +88,11 @@ public class EvenTicketPanel extends JPanel {
         this.add(peopleScrollPane);
         this.add(new JLabel("Select the type of ticket"));
         this.add(ticketTypeComboBox);
+
+        this.add(new JLabel("Select a tax (optional)"));
+        this.add(taxDecoratorCombobox);
+        this.add(new JLabel("Select a currency (optional)"));
+        this.add(currencyDecoratorCombobox);
         this.add(createTicket);
 
         addCreateTicketButtonListener();
@@ -85,7 +105,7 @@ public class EvenTicketPanel extends JPanel {
         for (Person person : allPersons) {
             this.ticketOwnerComboBox.addItem(person.getName());
         }
-        this.allPeopleJlist=new JList<>(allPersons.stream().map(Person::getName).toArray());
+        this.allPeopleJlist = new JList<>(allPersons.stream().map(Person::getName).toArray());
         this.allPeopleJlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.peopleScrollPane.setViewportView(allPeopleJlist);
         this.peopleScrollPane.revalidate();
@@ -105,12 +125,29 @@ public class EvenTicketPanel extends JPanel {
             for (Object namesPerson : namesPeople) {
                 actualNames.add(namesPerson.toString());
             }
-            ticketController.addTicket(new EvenSplitTicket(
+
+            Ticket evenSplitTicket = new EvenSplitTicket(
                     ticketType,
                     totalPrice,
                     allPersons.get(ticketOwnerComboBox.getSelectedIndex()),
-                    personController.peopleByNames(actualNames)));
+                    personController.peopleByNames(actualNames));
 
+            if (taxDecoratorCombobox.getSelectedItem().toString().equals("6%")) {
+                evenSplitTicket = new TaxDecorator(evenSplitTicket, 1.06);
+            } else if (taxDecoratorCombobox.getSelectedItem().toString().equals("21%")) {
+                evenSplitTicket = new TaxDecorator(evenSplitTicket, 1.21);
+            }
+
+            if (currencyDecoratorCombobox.getSelectedItem().toString().equals("Dollar")) {
+                evenSplitTicket = new CurrencyDecorator(evenSplitTicket, Currency.Dollar);
+            } else if (currencyDecoratorCombobox.getSelectedItem().toString().equals("Zlotych")) {
+                evenSplitTicket = new CurrencyDecorator(evenSplitTicket, Currency.Zlotych);
+            }
+
+            evenSplitTicket.setPrice(evenSplitTicket.calculateTotalPrice());
+            evenSplitTicket.addDebts();
+            System.out.println(evenSplitTicket.calculateTotalPrice());
+            ticketController.addTicket(evenSplitTicket);
         });
     }
 }

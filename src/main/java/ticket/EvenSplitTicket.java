@@ -9,14 +9,17 @@ import java.util.Map;
 public class EvenSplitTicket extends Ticket{
     public EvenSplitTicket(TicketType ticketType, int price, Person owner, List<Person> peoplePaying) {
         super(ticketType, price, owner, peoplePaying);
+    }
+
+    @Override
+    public void addDebts() {
         for (Person person : peoplePaying) {
-            person.addDebt(owner,price/(peoplePaying.size()+1));
+            person.addDebt(getOwner(),price/(peoplePaying.size()+1));
         }
     }
 
-
     @Override
-    public int getMoneyOfPerson(Person person) {
-        return getPrice()/ peoplePaying.size();
+    public int calculateTotalPrice() {
+        return this.getPrice();
     }
 }
