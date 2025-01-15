@@ -3,6 +3,7 @@ package view.panels;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
+import ticket.TicketFactory;
 import ticket.TicketType;
 import ticket.UnevenSplitTicket;
 
@@ -17,20 +18,19 @@ public class UnevenTicketPanel extends JPanel {
     private TicketController ticketController;
     private PersonController personController;
     private TicketType ticketType;
-    private boolean isEvenTicket;
     private int totalPrice;
     private List<Person> allPersons;
-
-    TicketType[] ticketTypeArray = TicketType.values();
+    private final TicketType[] ticketTypeArray = TicketType.values();
     private JComboBox ticketTypeComboBox;
     private JComboBox ticketOwnerComboBox;
     private JFormattedTextField totalPriceTextField;
     private JLabel totalPriceTextFieldLabel;
     private JButton createTicket;
     private DefaultTableModel tableModel;
+    private TicketFactory ticketFactory;
 
     public UnevenTicketPanel(TicketController ticketController, PersonController personController) {
-
+        this.ticketFactory = new TicketFactory();
         this.totalPriceTextField = new JFormattedTextField();
         this.totalPriceTextFieldLabel = new JLabel("Enter a price");
         this.ticketOwnerComboBox = new JComboBox();
@@ -38,8 +38,6 @@ public class UnevenTicketPanel extends JPanel {
         this.ticketController = ticketController;
         this.personController = personController;
         this.allPersons = personController.getAllPeople();
-
-        // TODO: remove this inner (anonymous) class and move it to another class "NumberInputVerifier".
         totalPriceTextField.setInputVerifier(new InputVerifier() {
             @Override
             public boolean verify(JComponent input) {
@@ -149,13 +147,11 @@ public class UnevenTicketPanel extends JPanel {
                 }
 
             }
-            ticketController.addTicket(new UnevenSplitTicket(
+            ticketController.addTicket(ticketFactory.createUnevenSplitTicket(
                     ticketType,
                     totalPrice,
                     allPersons.get(ticketOwnerComboBox.getSelectedIndex()),
-                    peoplePriceMap,
-                    personController.peopleByNames(actualNames)
-                    ));
+                    peoplePriceMap));
 
         });
     }

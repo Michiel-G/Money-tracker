@@ -3,10 +3,7 @@ package view.panels;
 import controller.PersonController;
 import controller.TicketController;
 import person.Person;
-import ticket.EvenSplitTicket;
-import ticket.Ticket;
-import ticket.TicketType;
-import ticket.UnevenSplitTicket;
+import ticket.*;
 import ticket.decorator.Currency;
 import ticket.decorator.CurrencyDecorator;
 import ticket.decorator.TaxDecorator;
@@ -21,25 +18,22 @@ public class EvenTicketPanel extends JPanel {
     private TicketType ticketType;
     private int totalPrice;
     private List<Person> allPersons;
-
-    TicketType[] ticketTypeArray = TicketType.values();
+    private final TicketType[] ticketTypeArray = TicketType.values();
     private JComboBox ticketTypeComboBox;
     private JComboBox ticketOwnerComboBox;
-
     private JComboBox taxDecoratorCombobox;
-    String[] taxList = {"", "6%", "21%"};
+    private final String[] taxList = {"", "6%", "21%"};
     private JComboBox currencyDecoratorCombobox;
-    String[] currencyList = {"", "Euro", "Dollar", "Zlotych"};
-    private JFormattedTextField discountCodeDecoratorTextField;
-
+    private final String[] currencyList = {"", "Euro", "Dollar", "Zlotych"};
     private JScrollPane peopleScrollPane;
     private JList<Object> allPeopleJlist;
     private JFormattedTextField totalPriceTextField;
     private JLabel totalPriceTextFieldLabel;
     private JButton createTicket;
+    private TicketFactory ticketFactory;
 
     public EvenTicketPanel(TicketController ticketController, PersonController personController) {
-
+        this.ticketFactory = new TicketFactory();
         this.totalPriceTextField = new JFormattedTextField();
         this.totalPriceTextFieldLabel = new JLabel("Enter a price");
         this.ticketOwnerComboBox = new JComboBox();
@@ -127,9 +121,7 @@ public class EvenTicketPanel extends JPanel {
             }
 
             actualNames.remove(allPersons.get(ticketOwnerComboBox.getSelectedIndex()).getName());
-
-            Ticket evenSplitTicket = new EvenSplitTicket(
-                    ticketType,
+            Ticket evenSplitTicket =ticketFactory.createEvenSplitTicket(ticketType,
                     totalPrice,
                     allPersons.get(ticketOwnerComboBox.getSelectedIndex()),
                     personController.peopleByNames(actualNames));
