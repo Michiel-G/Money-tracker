@@ -126,6 +126,8 @@ public class EvenTicketPanel extends JPanel {
                 actualNames.add(namesPerson.toString());
             }
 
+            actualNames.remove(allPersons.get(ticketOwnerComboBox.getSelectedIndex()).getName());
+
             Ticket evenSplitTicket = new EvenSplitTicket(
                     ticketType,
                     totalPrice,
